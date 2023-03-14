@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const { getAllCourse, getOneCourse, getCourseInfo, addCourse, updateCourse, addNewVideoCourse, deleteCourse } = require("../controllers/courseController")
-const { VerifyToken, UserRole, TeacherRole, AdminRole } = require("../auth/VerifyToken")
+const { UserRole, TeacherRole, AdminRole } = require("../auth/VerifyToken")
 
 // get all users
 router.get("/", getAllCourse )

@@ -5,7 +5,7 @@ const { UserRole, TeacherRole, AdminRole } = require("../auth/VerifyToken")
 
 // get all users
 router.post("/", addUser )
-router.get("/:id", getUser )
+router.get("/:id", UserRole, getUser )
 router.delete("/:id", TeacherRole, deleteUser )
 router.put("/:id", UserRole, updateUser )
 router.put("/addCourse/:id", UserRole, updateUserAddCourse )

@@ -34,12 +34,12 @@ router.post("/login", async (req, res) => {
     const refreshToken = refreshAccessToken(foundUser);
 
     if (cookies?.refreshToken) {
-      res.clearCookie("refreshToken", { httpOnly: true, secure: false, sameSite: "Strict" });
+      res.clearCookie("refreshToken", { httpOnly: true, secure: true, sameSite: "none" });
     }
 
     // Creates Secure Cookie with refresh token
     res.cookie("refreshToken", refreshToken, 
-        { httpOnly: true, secure: false, sameSite: "Strict", maxAge: 7 * 24 * 60 * 60 * 1000 }
+        {httpOnly: true, secure: true, sameSite: "none", maxAge: 7 * 24 * 60 * 60 * 1000 }
     );
 
     // don't send password to user
@@ -59,7 +59,7 @@ router.get("/refreshToken", async (req, res) => {
     if (!cookies?.refreshToken) return res.status(401).json({ message: "no cookies found!" });
 
     const refreshToken = cookies.refreshToken;
-    res.clearCookie("refreshToken", { httpOnly: true, secure: false, sameSite: "Strict" });
+    res.clearCookie("refreshToken", { httpOnly: true, secure: true, sameSite: "none" });
   
     // compare refresh token !
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
@@ -71,7 +71,7 @@ router.get("/refreshToken", async (req, res) => {
     
         // Creates Secure Cookie with refresh token
         res.cookie("refreshToken", refreshToken,
-            { httpOnly: true, secure: false, sameSite: "Strict", maxAge: 7 * 24 * 60 * 60 * 1000 }
+            { httpOnly: true, secure: true, sameSite: "none", maxAge: 7 * 24 * 60 * 60 * 1000 }
         );
   
         return res.json({ accessToken });
